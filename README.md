@@ -1,6 +1,9 @@
-dependencies
+# Dependencies and Commands
 
-npm i
+npm install
 npm install -D tailwindcss @tailwindcss/cli postcss autoprefixer
 npx @tailwindcss/cli init -p
-npm i react-router-dom
+npm install react-router-dom
+npm start
+
+# About the Project

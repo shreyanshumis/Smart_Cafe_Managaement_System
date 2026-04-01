@@ -55,22 +55,18 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 99999;
   top: 0;
   left: 0;
-
-  /* Soft golden ring — no mix-blend-mode, no inversion */
-  background: rgba(200, 169, 110, 0.15);
-  border: 1.5px solid rgba(200, 169, 110, 0.7);
-  backdrop-filter: blur(2px);
-
+  background: rgba(200, 169, 110, 0.12);
+  border: 1.5px solid rgba(200, 169, 110, 0.75);
   transition:
-    width 0.25s cubic-bezier(0.23, 1, 0.32, 1),
-    height 0.25s cubic-bezier(0.23, 1, 0.32, 1),
-    margin 0.25s cubic-bezier(0.23, 1, 0.32, 1),
-    background 0.25s ease,
-    border-color 0.25s ease,
+    width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    margin 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    background 0.3s ease,
+    border-color 0.3s ease,
     opacity 0.3s ease;
 }
 
-/* Inner dot — gives the cursor a focal point */
+/* Inner dot */
 #custom-cursor::after {
   content: '';
   position: absolute;
@@ -80,18 +76,18 @@ h1, h2, h3, h4, h5, h6 {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: rgba(200, 169, 110, 0.9);
-  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  background: rgba(200, 169, 110, 0.95);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Hover state — expands into a soft golden halo, dot fades */
+/* Expanded halo on hover */
 #custom-cursor.cursor-big {
-  width: 56px;
-  height: 56px;
-  margin-left: -14px;
-  margin-top: -14px;
-  background: rgba(200, 169, 110, 0.08);
-  border-color: rgba(200, 169, 110, 0.45);
+  width: 60px;
+  height: 60px;
+  margin-left: -16px;
+  margin-top: -16px;
+  background: rgba(200, 169, 110, 0.06);
+  border-color: rgba(200, 169, 110, 0.4);
 }
 
 #custom-cursor.cursor-big::after {
@@ -101,4 +97,52 @@ h1, h2, h3, h4, h5, h6 {
 
 #custom-cursor.cursor-hidden {
   opacity: 0;
+}
+
+/* ── Text zoom-clarity effect ───────────────────────────────── */
+
+/* All hoverable text starts slightly blurred and small */
+a, button, h1, h2, h3, label,
+[role="button"] {
+  transition:
+    filter 0.3s ease,
+    transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    letter-spacing 0.3s ease,
+    color 0.3s ease;
+  filter: blur(0.3px);
+  will-change: filter, transform;
+  display: inline-block;
+}
+
+/* On hover — snap into sharp focus and lift very slightly */
+a:hover, button:hover, h1:hover, h2:hover, h3:hover, label:hover,
+[role="button"]:hover {
+  filter: blur(0px);
+  transform: scale(1.03);
+  letter-spacing: 0.01em;
+}
+
+/* Inputs and textareas — clarity only, no scale */
+input, textarea, select {
+  transition: filter 0.3s ease, box-shadow 0.3s ease;
+  filter: blur(0.4px);
+}
+
+input:focus, textarea:focus, select:focus {
+  filter: blur(0px);
+  box-shadow: 0 0 0 2px rgba(200, 169, 110, 0.35);
+  outline: none;
+}
+
+/* Paragraph text near cursor — handled via JS class below */
+.cursor-focus {
+  filter: blur(0px) !important;
+  color: var(--text-primary) !important;
+  transition: filter 0.25s ease, color 0.25s ease;
+}
+
+.cursor-unfocus {
+  filter: blur(0.5px);
+  color: var(--text-secondary);
+  transition: filter 0.4s ease, color 0.4s ease;
 }

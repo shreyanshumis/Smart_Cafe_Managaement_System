@@ -15,7 +15,18 @@ const getMenuItems = async (req, res) => {
 // @route   POST /api/menu
 const createMenuItem = async (req, res) => {
     try {
-        const menuItem = await Menu.create(req.body);
+        const { name, description, price, category } = req.body;
+
+        const image = req.file ? req.file.path : "";
+
+        const menuItem = await Menu.create({
+            name,
+            description,
+            price,
+            category,
+            image
+        });
+
         res.status(201).json(menuItem);
     } catch (error) {
         res.status(500).json({ message: error.message });

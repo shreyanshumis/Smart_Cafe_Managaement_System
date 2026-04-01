@@ -6,12 +6,13 @@ const {
     deleteMenuItem
 } = require('../controllers/menuController');
 const { protect, admin } = require('../middleware/auth');
+const upload = require('../middleware/upload'); // ✅ ADD THIS
 
 const router = express.Router();
 
 router.route('/')
     .get(getMenuItems)
-    .post(protect, admin, createMenuItem);
+    .post(protect, admin, upload.single('image'), createMenuItem); // ✅ UPDATED
 
 router.route('/:id')
     .put(protect, admin, updateMenuItem)

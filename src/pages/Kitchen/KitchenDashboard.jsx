@@ -4,10 +4,12 @@ import { getKitchenOrders, updateOrderStatus } from '../../redux/slices/orderSli
 import toast from 'react-hot-toast';
 
 const statusConfig = {
-    approved:  { label: 'Approved',  bg: '#C8A96E22', text: '#8A6830', border: '#C8A96E55', next: 'preparing', action: 'Start Preparing', btnBg: 'var(--info)' },
-    preparing: { label: 'Preparing', bg: '#5A7A8A22', text: '#2A5A6A', border: '#5A7A8A55', next: 'ready',     action: 'Mark Ready',      btnBg: 'var(--accent)' },
-    ready:     { label: 'Ready',     bg: '#5A8A6A22', text: '#2A6A4A', border: '#5A8A6A55', next: 'served',    action: 'Mark Served',     btnBg: 'var(--success)' },
-    served:    { label: 'Served',    bg: '#88888822', text: '#555',    border: '#88888844', next: null,         action: null,              btnBg: null },
+    approved:         { label:'Approved',    bg:'#C8A96E22', text:'#8A6830', border:'#C8A96E55', next:'preparing',        action:'Start Preparing',    btnBg:'var(--info)'    },
+    preparing:        { label:'Preparing',   bg:'#5A7A8A22', text:'#2A5A6A', border:'#5A7A8A55', next:'ready',            action:'Mark Ready',         btnBg:'var(--accent)'  },
+    ready:            { label:'Ready',       bg:'#5A8A6A22', text:'#2A6A4A', border:'#5A8A6A55', next:null,               action:null,                 btnBg:null             },
+    out_for_delivery: { label:'On the way',  bg:'#C8A96E22', text:'#8A6830', border:'#C8A96E55', next:'delivered',        action:'Mark Delivered',     btnBg:'var(--accent)'  },
+    delivered:        { label:'Delivered',   bg:'#88888822', text:'#555',    border:'#88888844', next:null,               action:null,                 btnBg:null             },
+    served:           { label:'Served',      bg:'#88888822', text:'#555',    border:'#88888844', next:null,               action:null,                 btnBg:null             },
 };
 
 const KitchenDashboard = () => {

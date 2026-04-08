@@ -1,7 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../redux/slices/orderSlice';
+const mongoose = require('mongoose');
 
+const orderSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    tableNumber: { type: Number },
+    orderType: {
+        type: String,
+        enum: ['dine-in', 'delivery'],
+        default: 'dine-in',
+    },
+    deliveryAddress: { type: String },
+    deliveryLat:     { type: Number },
+    deliveryLng:     { type: Number },
+    items: [{
+        menuItem:  { type: mongoose.Schema.Types.ObjectId, ref: 'Menu', required: true },
+        name:      String,
+        quantity:  { type: Number, required: true, min: 1 },
+        price:     Number,
+    }],
+    totalAmount:   { type: Number, required: true },
+    status: {
+        type: String,
+        enum: ['pending','approved','preparing','ready','out_for_delivery','delivered','served','completed'],
+        default: 'pending',
+    },
+    paymentStatus: { type: String, enum: ['pending','paid','failed'], default: 'pending' },
+    approvedBy:    { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    approvedAt:    Date,
+}, { timestamps: true });
+
+module.exports = mongoose.model('Order', orderSchema);
 const statusConfig = {
     pending:   { label: 'Pending',   bg: '#88888822', text: '#555',    border: '#88888844' },
     approved:  { label: 'Approved',  bg: '#C8A96E22', text: '#8A6830', border: '#C8A96E55' },
